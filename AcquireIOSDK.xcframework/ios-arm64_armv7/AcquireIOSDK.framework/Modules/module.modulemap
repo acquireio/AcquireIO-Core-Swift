@@ -1,0 +1,11 @@
+framework module AcquireIOSDK {
+  umbrella header "AcquireIOSDK.h"
+
+  export *
+  module * { export * }
+}
+
+module AcquireIOSDK.Swift {
+    header "AcquireIOSDK-Swift.h"
+    requires objc
+}

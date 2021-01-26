@@ -1,0 +1,242 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3 (swiftlang-1200.0.29.2 clang-1200.0.30.1)
+// swift-module-flags: -target arm64-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name AcquireIOSDK
+import AVFoundation
+import AVKit
+@_exported import AcquireIOSDK
+import Foundation
+import MobileCoreServices
+import Photos
+import SafariServices
+import SocketIO
+import Swift
+import UIKit
+import WebKit
+import WebRTC
+extension UIView {
+  open func addRippleAnimation(color: UIKit.UIColor, rippleWidth: CoreGraphics.CGFloat = 2, duration: Swift.Double = 1.5, repeatCount: Swift.Int = 1, rippleCount: Swift.Int = 3, rippleDistance: CoreGraphics.CGFloat? = nil, expandMaxRatio ratio: CoreGraphics.CGFloat = 1, startReset: Swift.Bool = true, handler: ((QuartzCore.CAAnimation) -> Swift.Void)? = nil)
+  open func removeRippleAnimation()
+  open var isRippleAnimating: Swift.Bool {
+    get
+  }
+}
+extension String {
+  public func isMatch(regEx: Swift.String) -> Swift.Bool
+  public var isPhoneNumber: Swift.Bool {
+    get
+  }
+  public var isEmail: Swift.Bool {
+    get
+  }
+}
+@objc public enum AIOCallType : Swift.Int {
+  case audio = 0
+  case video
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension UIViewController {
+  @objc override dynamic open func awakeFromNib()
+}
+@objc public enum AcquireIOAPNSTokenType : Swift.Int {
+  case unknown = 0
+  case sandbox
+  case prod
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum AcquireIOPushMessageStatus : Swift.Int {
+  case unknown
+  case new
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum AcquireIOAgentStatus : Swift.Int {
+  case online = 0
+  case offline
+  case invisible
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum AcquireIOConnectionStatus : Swift.Int {
+  case notConnected = 0
+  case disconnected
+  case connecting
+  case connected
+  case sessionStarted
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum AcquireIOCallSupportStatus : Swift.Int {
+  case notConnected
+  case disconnected
+  case connecting
+  case connected
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum AcquireIOInteractionEventType : Swift.Int {
+  case audioCallStarted = 0
+  case videoCallStarted
+  case audioCallAnswered
+  case videoCallAnswered
+  case callDeclined
+  case callAutoDeclined
+  case callerViewMinimize
+  case callerViewMaximize
+  case callerViewCameraSwitchToFront
+  case callerViewCameraSwitchToBack
+  case callSpeakerOn
+  case callSpeakerOff
+  case callMute
+  case callUnmute
+  case callVideoOn
+  case callVideoOff
+  case callDisconnected
+  case conversationStart
+  case conversationEnd
+  case conversationFeedbackSubmit
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public protocol AcquireIODelegate {
+  func didChangeConnectionStatus(status: AcquireIOSDK.AcquireIOConnectionStatus)
+  func didChangeAgentStatus(agentID: Swift.String, andStatus status: AcquireIOSDK.AcquireIOAgentStatus)
+  func didUpdateUnreadCount(_ count: Swift.Int)
+  func hideSupport()
+  func onError(error: Swift.Error)
+  func didUserInteracted(withEvent type: AcquireIOSDK.AcquireIOInteractionEventType, withData data: [Swift.String : Any]?)
+  func onAgentConnected()
+  func didReceiveTriggerEvent(_ eventName: Swift.String)
+  func onCallSupportStatusChange(_ status: AcquireIOSDK.AcquireIOCallSupportStatus, withMessage message: Swift.String?)
+}
+extension AcquireIODelegate {
+  public func didChangeConnectionStatus(status: AcquireIOSDK.AcquireIOConnectionStatus)
+  public func didChangeAgentStatus(agentID: Swift.String, andStatus status: AcquireIOSDK.AcquireIOAgentStatus)
+  public func didUpdateUnreadCount(_ count: Swift.Int)
+  public func hideSupport()
+  public func onError(error: Swift.Error)
+  public func didUserInteracted(withEvent type: AcquireIOSDK.AcquireIOInteractionEventType, withData data: [Swift.String : Any]?)
+  public func onAgentConnected()
+  public func didReceiveTriggerEvent(_ eventName: Swift.String)
+  public func onCallSupportStatusChange(_ status: AcquireIOSDK.AcquireIOCallSupportStatus, withMessage message: Swift.String?)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class AcquireIO : ObjectiveC.NSObject {
+  @objc public static let support: AcquireIOSDK.AcquireIO
+  final public var delegate: AcquireIOSDK.AcquireIODelegate?
+  @objc final public func setAccount(_ accountUID: Swift.String, withOptions optionDictionary: AcquireIOSDK.AcquireIOConfig?)
+  @objc deinit
+}
+extension AcquireIO {
+  @objc final public func showSupport(_ viewController: UIKit.UIViewController)
+  @objc final public func showCallSupport(callType: AcquireIOSDK.AIOCallType)
+  @objc final public func startSession()
+  @objc final public func setAPNSToken(_ apnsToken: Foundation.Data, type: AcquireIOSDK.AcquireIOAPNSTokenType)
+  @objc final public func appDidReceiveMessage(message: [Swift.AnyHashable : Any]) -> AcquireIOSDK.AcquireIOPushMessageStatus
+  @objc final public func setVisitorIdentifier(visitorIdentifier: Swift.String)
+  @objc final public func setVisitor(_ name: Swift.String?, phone: Swift.String?, email: Swift.String?, department: Swift.String?)
+  @objc final public func setVisitorDetail(_ name: Swift.String?, phone: Swift.String?, email: Swift.String?, extraFields fields: [[Swift.String : Any]]?)
+  @objc final public func setVisitorExtraField(_ fields: [[Swift.String : Any]])
+  @objc final public func setVisitorHash(_ visitorHash: Swift.String)
+  @objc final public func getVisitorId() -> Swift.String
+  @objc final public func getConnectionStatus() -> AcquireIOSDK.AcquireIOConnectionStatus
+  @objc final public func logoutVisitor()
+  @objc final public func onError(error: Swift.Error)
+  @objc final public func getUnreadCount() -> Swift.Int
+  @objc final public func getAvailableAgentCount() -> Swift.Int
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class AcquireIOConfig : ObjectiveC.NSObject {
+  @objc public static let config: AcquireIOSDK.AcquireIOConfig
+  @objc final public var buttonImageName: Swift.String {
+    get
+  }
+  @objc final public var webSocketServer: Swift.String {
+    get
+  }
+  @objc final public var useDefaultTheme: Swift.Bool {
+    get
+  }
+  @objc final public var themeOptions: [Swift.String : Any] {
+    get
+  }
+  @objc final public var showAvatar: Swift.Bool {
+    get
+  }
+  @objc final public var showThreadList: Swift.Bool {
+    get
+  }
+  @objc final public var showChatButton: Swift.Bool {
+    get
+  }
+  @objc final public var showVideoButton: Swift.Bool {
+    get
+  }
+  @objc final public var showAudioButton: Swift.Bool {
+    get
+  }
+  @objc final public var showLocalNotificationInApp: Swift.Bool {
+    get
+  }
+  @objc final public var sessionConnectAndStartAuto: Swift.Bool {
+    get
+  }
+  @objc final public var removeVideoCallDisconnectButton: Swift.Bool {
+    get
+  }
+  @objc final public var removeAudioCallDisconnectButton: Swift.Bool {
+    get
+  }
+  @objc final public var disableAttachment: Swift.Bool {
+    get
+  }
+  @objc final public var removeCallViewResizeButton: Swift.Bool {
+    get
+  }
+  @objc final public var isHideNewChat: Swift.Bool {
+    get
+  }
+  @objc final public func setDict(_ dict: [Swift.String : Any])
+  @objc deinit
+}
+extension AcquireIOSDK.AIOCallType : Swift.Equatable {}
+extension AcquireIOSDK.AIOCallType : Swift.Hashable {}
+extension AcquireIOSDK.AIOCallType : Swift.RawRepresentable {}
+extension AcquireIOSDK.AcquireIOAPNSTokenType : Swift.Equatable {}
+extension AcquireIOSDK.AcquireIOAPNSTokenType : Swift.Hashable {}
+extension AcquireIOSDK.AcquireIOAPNSTokenType : Swift.RawRepresentable {}
+extension AcquireIOSDK.AcquireIOPushMessageStatus : Swift.Equatable {}
+extension AcquireIOSDK.AcquireIOPushMessageStatus : Swift.Hashable {}
+extension AcquireIOSDK.AcquireIOPushMessageStatus : Swift.RawRepresentable {}
+extension AcquireIOSDK.AcquireIOAgentStatus : Swift.Equatable {}
+extension AcquireIOSDK.AcquireIOAgentStatus : Swift.Hashable {}
+extension AcquireIOSDK.AcquireIOAgentStatus : Swift.RawRepresentable {}
+extension AcquireIOSDK.AcquireIOConnectionStatus : Swift.Equatable {}
+extension AcquireIOSDK.AcquireIOConnectionStatus : Swift.Hashable {}
+extension AcquireIOSDK.AcquireIOConnectionStatus : Swift.RawRepresentable {}
+extension AcquireIOSDK.AcquireIOCallSupportStatus : Swift.Equatable {}
+extension AcquireIOSDK.AcquireIOCallSupportStatus : Swift.Hashable {}
+extension AcquireIOSDK.AcquireIOCallSupportStatus : Swift.RawRepresentable {}
+extension AcquireIOSDK.AcquireIOInteractionEventType : Swift.Equatable {}
+extension AcquireIOSDK.AcquireIOInteractionEventType : Swift.Hashable {}
+extension AcquireIOSDK.AcquireIOInteractionEventType : Swift.RawRepresentable {}
