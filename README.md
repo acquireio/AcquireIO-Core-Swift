@@ -1,8 +1,8 @@
 ![AcquireIO](https://developers.acquire.io/media/data/acquire-logo.png)
 
 
-[![CocoaPods](https://img.shields.io/badge/platforms-iOS-orange.svg?maxAge=2592000)](https://cocoapods.org/pods/AcquireIO)
-[![Language](https://img.shields.io/badge/languages-Swift-orange.svg?maxAge=2592000)](https://github.com/acquireio/CocoaPods)
+[![CocoaPods](https://img.shields.io/badge/platforms-iOS-orange.svg?maxAge=2592000)](https://cocoapods.org/pods/AcquireIO-Core-Swift)
+[![Language](https://img.shields.io/badge/languages-Swift-orange.svg?maxAge=2592000)](https://github.com/acquireio/AcquireIO-Core-Swift)
 
 
 
