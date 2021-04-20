@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'AcquireIO-Core-Swift'
-  s.version          = '1.0'
+  s.version          = '1.1.0'
   s.summary          = 'Your complete customer communication platform - and not just live chat'
   s.homepage         = 'https://acquire.io/'
   s.license          = { :type => 'Commercial', :text => 'Copyright (C) 2021 by Acquire' }

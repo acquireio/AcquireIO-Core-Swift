@@ -61,6 +61,8 @@ The framework package is provided via this repository, which contains the follow
    ```
 
    target :YourTargetName do
+      # Note: use_frameworks! is required to import any dynamic framework.
+      use_frameworks!
       pod 'AcquireIO-Core-Swift'
    end
 
@@ -75,6 +77,7 @@ The framework package is provided via this repository, which contains the follow
         if ['GoogleWebRTC', 'Socket.IO-Client-Swift', 'Starscream'].include? target.name
           target.build_configurations.each do |config|
               config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+              config.build_settings['ENABLE_BITCODE'] = 'NO'
           end
         end
       end

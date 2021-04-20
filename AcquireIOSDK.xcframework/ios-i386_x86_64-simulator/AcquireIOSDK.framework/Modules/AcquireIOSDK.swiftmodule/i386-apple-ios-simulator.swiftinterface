@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.3 (swiftlang-1200.0.29.2 clang-1200.0.30.1)
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
 // swift-module-flags: -target i386-apple-ios10.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name AcquireIOSDK
 import AVFoundation
 import AVKit
@@ -13,6 +13,15 @@ import Swift
 import UIKit
 import WebKit
 import WebRTC
+@objc public enum AIOCallType : Swift.Int {
+  case audio = 0
+  case video
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
 extension UIView {
   open func addRippleAnimation(color: UIKit.UIColor, rippleWidth: CoreGraphics.CGFloat = 2, duration: Swift.Double = 1.5, repeatCount: Swift.Int = 1, rippleCount: Swift.Int = 3, rippleDistance: CoreGraphics.CGFloat? = nil, expandMaxRatio ratio: CoreGraphics.CGFloat = 1, startReset: Swift.Bool = true, handler: ((QuartzCore.CAAnimation) -> Swift.Void)? = nil)
   open func removeRippleAnimation()
@@ -28,18 +37,6 @@ extension String {
   public var isEmail: Swift.Bool {
     get
   }
-}
-@objc public enum AIOCallType : Swift.Int {
-  case audio = 0
-  case video
-  public typealias RawValue = Swift.Int
-  public init?(rawValue: Swift.Int)
-  public var rawValue: Swift.Int {
-    get
-  }
-}
-extension UIViewController {
-  @objc override dynamic open func awakeFromNib()
 }
 @objc public enum AcquireIOAPNSTokenType : Swift.Int {
   case unknown = 0
@@ -120,16 +117,16 @@ extension UIViewController {
     get
   }
 }
-public protocol AcquireIODelegate {
-  func didChangeConnectionStatus(status: AcquireIOSDK.AcquireIOConnectionStatus)
-  func didChangeAgentStatus(agentID: Swift.String, andStatus status: AcquireIOSDK.AcquireIOAgentStatus)
-  func didUpdateUnreadCount(_ count: Swift.Int)
-  func hideSupport()
-  func onError(error: Swift.Error)
-  func didUserInteracted(withEvent type: AcquireIOSDK.AcquireIOInteractionEventType, withData data: [Swift.String : Any]?)
-  func onAgentConnected()
-  func didReceiveTriggerEvent(_ eventName: Swift.String)
-  func onCallSupportStatusChange(_ status: AcquireIOSDK.AcquireIOCallSupportStatus, withMessage message: Swift.String?)
+@objc public protocol AcquireIODelegate {
+  @objc func didChangeConnectionStatus(status: AcquireIOSDK.AcquireIOConnectionStatus)
+  @objc func didChangeAgentStatus(agentID: Swift.String, andStatus status: AcquireIOSDK.AcquireIOAgentStatus)
+  @objc func didUpdateUnreadCount(_ count: Swift.Int)
+  @objc func hideSupport()
+  @objc func onError(error: Swift.Error)
+  @objc func didUserInteracted(withEvent type: AcquireIOSDK.AcquireIOInteractionEventType, withData data: [Swift.String : Any]?)
+  @objc func onAgentConnected()
+  @objc func didReceiveTriggerEvent(_ eventName: Swift.String)
+  @objc func onCallSupportStatusChange(_ status: AcquireIOSDK.AcquireIOCallSupportStatus, withMessage message: Swift.String?)
 }
 extension AcquireIODelegate {
   public func didChangeConnectionStatus(status: AcquireIOSDK.AcquireIOConnectionStatus)
@@ -144,7 +141,7 @@ extension AcquireIODelegate {
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class AcquireIO : ObjectiveC.NSObject {
   @objc public static let support: AcquireIOSDK.AcquireIO
-  final public var delegate: AcquireIOSDK.AcquireIODelegate?
+  @objc final public var delegate: AcquireIOSDK.AcquireIODelegate?
   @objc final public func setAccount(_ accountUID: Swift.String, withOptions optionDictionary: AcquireIOSDK.AcquireIOConfig?)
   @objc deinit
 }
@@ -218,6 +215,9 @@ extension AcquireIO {
   }
   @objc final public func setDict(_ dict: [Swift.String : Any])
   @objc deinit
+}
+extension UIViewController {
+  @objc override dynamic open func awakeFromNib()
 }
 extension AcquireIOSDK.AIOCallType : Swift.Equatable {}
 extension AcquireIOSDK.AIOCallType : Swift.Hashable {}
