@@ -18,7 +18,7 @@
 
 ## Requirements
   - iOS 10.0+
-  - XCode 11.0+ 
+  - XCode 12.0+ 
   
 The framework has been written in Swift 5.0, and we recommend use of Swift for the simplest and cleanest integration.
 

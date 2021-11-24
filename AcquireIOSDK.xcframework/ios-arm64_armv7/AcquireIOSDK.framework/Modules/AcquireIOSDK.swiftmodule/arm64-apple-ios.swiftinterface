@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
+// swift-compiler-version: Apple Swift version 5.4.2 (swiftlang-1205.0.28.2 clang-1205.0.19.57)
 // swift-module-flags: -target arm64-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name AcquireIOSDK
 import AVFoundation
 import AVKit
@@ -16,34 +16,21 @@ import WebRTC
 @objc public enum AIOCallType : Swift.Int {
   case audio = 0
   case video
-  public typealias RawValue = Swift.Int
   public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
   }
 }
-extension UIView {
-  open func addRippleAnimation(color: UIKit.UIColor, rippleWidth: CoreGraphics.CGFloat = 2, duration: Swift.Double = 1.5, repeatCount: Swift.Int = 1, rippleCount: Swift.Int = 3, rippleDistance: CoreGraphics.CGFloat? = nil, expandMaxRatio ratio: CoreGraphics.CGFloat = 1, startReset: Swift.Bool = true, handler: ((QuartzCore.CAAnimation) -> Swift.Void)? = nil)
-  open func removeRippleAnimation()
-  open var isRippleAnimating: Swift.Bool {
-    get
-  }
-}
-extension String {
-  public func isMatch(regEx: Swift.String) -> Swift.Bool
-  public var isPhoneNumber: Swift.Bool {
-    get
-  }
-  public var isEmail: Swift.Bool {
-    get
-  }
+extension UITextField {
+  @objc override dynamic open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIKit.UIGestureRecognizer) -> Swift.Bool
 }
 @objc public enum AcquireIOAPNSTokenType : Swift.Int {
   case unknown = 0
   case sandbox
   case prod
-  public typealias RawValue = Swift.Int
   public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
   }
@@ -51,8 +38,8 @@ extension String {
 @objc public enum AcquireIOPushMessageStatus : Swift.Int {
   case unknown
   case new
-  public typealias RawValue = Swift.Int
   public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
   }
@@ -61,8 +48,8 @@ extension String {
   case online = 0
   case offline
   case invisible
-  public typealias RawValue = Swift.Int
   public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
   }
@@ -73,8 +60,8 @@ extension String {
   case connecting
   case connected
   case sessionStarted
-  public typealias RawValue = Swift.Int
   public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
   }
@@ -84,8 +71,20 @@ extension String {
   case disconnected
   case connecting
   case connected
-  public typealias RawValue = Swift.Int
   public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum CobrowseSessionStatus : Swift.Int {
+  case inActive
+  case connecting
+  case waiting
+  case active
+  case disconnected
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
   }
@@ -111,22 +110,26 @@ extension String {
   case conversationStart
   case conversationEnd
   case conversationFeedbackSubmit
-  public typealias RawValue = Swift.Int
   public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
   }
 }
 @objc public protocol AcquireIODelegate {
-  @objc func didChangeConnectionStatus(status: AcquireIOSDK.AcquireIOConnectionStatus)
-  @objc func didChangeAgentStatus(agentID: Swift.String, andStatus status: AcquireIOSDK.AcquireIOAgentStatus)
-  @objc func didUpdateUnreadCount(_ count: Swift.Int)
-  @objc func hideSupport()
-  @objc func onError(error: Swift.Error)
-  @objc func didUserInteracted(withEvent type: AcquireIOSDK.AcquireIOInteractionEventType, withData data: [Swift.String : Any]?)
-  @objc func onAgentConnected()
-  @objc func didReceiveTriggerEvent(_ eventName: Swift.String)
-  @objc func onCallSupportStatusChange(_ status: AcquireIOSDK.AcquireIOCallSupportStatus, withMessage message: Swift.String?)
+  @objc optional func didChangeConnectionStatus(status: AcquireIOSDK.AcquireIOConnectionStatus)
+  @objc optional func didChangeAgentStatus(agentID: Swift.String, andStatus status: AcquireIOSDK.AcquireIOAgentStatus)
+  @objc optional func didUpdateUnreadCount(_ count: Swift.Int)
+  @objc optional func didOpenAcquireSupport()
+  @objc optional func hideSupport()
+  @objc optional func onError(error: Swift.Error)
+  @objc optional func didUserInteracted(withEvent type: AcquireIOSDK.AcquireIOInteractionEventType, withData data: [Swift.String : Any]?)
+  @objc optional func onAgentConnected()
+  @objc optional func didReceiveTriggerEvent(_ eventName: Swift.String)
+  @objc optional func onCallSupportStatusChange(_ status: AcquireIOSDK.AcquireIOCallSupportStatus, withMessage message: Swift.String?)
+  @objc optional func onCobrowseSessionRequestSucceeded()
+  @objc optional func onCobrowseSessionRequestDecline()
+  @objc optional func didCobrowseSessionStateChange(_ status: AcquireIOSDK.CobrowseSessionStatus)
 }
 extension AcquireIODelegate {
   public func didChangeConnectionStatus(status: AcquireIOSDK.AcquireIOConnectionStatus)
@@ -141,12 +144,14 @@ extension AcquireIODelegate {
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class AcquireIO : ObjectiveC.NSObject {
   @objc public static let support: AcquireIOSDK.AcquireIO
-  @objc final public var delegate: AcquireIOSDK.AcquireIODelegate?
+  final public var delegate: AcquireIOSDK.AcquireIODelegate?
   @objc final public func setAccount(_ accountUID: Swift.String, withOptions optionDictionary: AcquireIOSDK.AcquireIOConfig?)
   @objc deinit
 }
 extension AcquireIO {
   @objc final public func showSupport(_ viewController: UIKit.UIViewController)
+  @objc final public func showSupport(_ viewController: UIKit.UIViewController, withReference reference: Swift.String)
+  @objc final public func showSupport(_ viewController: UIKit.UIViewController, withReference reference: Swift.String, withMessage message: Swift.String)
   @objc final public func showCallSupport(callType: AcquireIOSDK.AIOCallType)
   @objc final public func startSession()
   @objc final public func setAPNSToken(_ apnsToken: Foundation.Data, type: AcquireIOSDK.AcquireIOAPNSTokenType)
@@ -216,8 +221,61 @@ extension AcquireIO {
   @objc final public func setDict(_ dict: [Swift.String : Any])
   @objc deinit
 }
+extension UIView {
+  open func addRippleAnimation(color: UIKit.UIColor, rippleWidth: CoreGraphics.CGFloat = 2, duration: Swift.Double = 1.5, repeatCount: Swift.Int = 1, rippleCount: Swift.Int = 3, rippleDistance: CoreGraphics.CGFloat? = nil, expandMaxRatio ratio: CoreGraphics.CGFloat = 1, startReset: Swift.Bool = true, handler: ((QuartzCore.CAAnimation) -> Swift.Void)? = nil)
+  open func removeRippleAnimation()
+  open var isRippleAnimating: Swift.Bool {
+    get
+  }
+}
+extension String {
+  public func isMatch(regEx: Swift.String) -> Swift.Bool
+  public var isPhoneNumber: Swift.Bool {
+    get
+  }
+  public var isEmail: Swift.Bool {
+    get
+  }
+}
+extension UIScreen {
+  public var displayCornerRadius: CoreGraphics.CGFloat {
+    get
+  }
+}
 extension UIViewController {
   @objc override dynamic open func awakeFromNib()
+}
+final public class RecordingOverlay {
+  public init(screen: UIKit.UIScreen = .main)
+  @discardableResult
+  public static func show(on screen: UIKit.UIScreen = .main, animated: Swift.Bool = true) -> AcquireIOSDK.RecordingOverlay
+  @discardableResult
+  final public func show(animated: Swift.Bool = true) -> AcquireIOSDK.RecordingOverlay
+  final public func hide(animated: Swift.Bool = true)
+  final public var color: UIKit.UIColor {
+    get
+    set
+  }
+  final public var length: CoreGraphics.CGFloat {
+    get
+    set
+  }
+  final public var isAnimated: Swift.Bool {
+    get
+    set
+  }
+  @available(iOS 9.0, *)
+  final public var areInteractionsEnabled: Swift.Bool {
+    get
+  }
+  @available(iOS 9.0, *)
+  final public func disableInteractions(exceptFor view: UIKit.UIView? = nil)
+  @available(iOS 9.0, *)
+  final public func disableInteractions(exceptFor views: [UIKit.UIView] = [])
+  final public func enableInteractions()
+  @objc deinit
+}
+extension RecordingOverlay {
 }
 extension AcquireIOSDK.AIOCallType : Swift.Equatable {}
 extension AcquireIOSDK.AIOCallType : Swift.Hashable {}
@@ -237,6 +295,9 @@ extension AcquireIOSDK.AcquireIOConnectionStatus : Swift.RawRepresentable {}
 extension AcquireIOSDK.AcquireIOCallSupportStatus : Swift.Equatable {}
 extension AcquireIOSDK.AcquireIOCallSupportStatus : Swift.Hashable {}
 extension AcquireIOSDK.AcquireIOCallSupportStatus : Swift.RawRepresentable {}
+extension AcquireIOSDK.CobrowseSessionStatus : Swift.Equatable {}
+extension AcquireIOSDK.CobrowseSessionStatus : Swift.Hashable {}
+extension AcquireIOSDK.CobrowseSessionStatus : Swift.RawRepresentable {}
 extension AcquireIOSDK.AcquireIOInteractionEventType : Swift.Equatable {}
 extension AcquireIOSDK.AcquireIOInteractionEventType : Swift.Hashable {}
 extension AcquireIOSDK.AcquireIOInteractionEventType : Swift.RawRepresentable {}
