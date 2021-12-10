@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.4.2 (swiftlang-1205.0.28.2 clang-1205.0.19.57)
+// swift-compiler-version: Apple Swift version 5.5.1 (swiftlang-1300.0.31.4 clang-1300.0.29.6)
 // swift-module-flags: -target x86_64-apple-ios10.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name AcquireIOSDK
 import AVFoundation
 import AVKit
@@ -13,6 +13,7 @@ import Swift
 import UIKit
 import WebKit
 import WebRTC
+import _Concurrency
 @objc public enum AIOCallType : Swift.Int {
   case audio = 0
   case video
@@ -22,8 +23,8 @@ import WebRTC
     get
   }
 }
-extension UITextField {
-  @objc override dynamic open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIKit.UIGestureRecognizer) -> Swift.Bool
+extension UIKit.UITextField {
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIKit.UIGestureRecognizer) -> Swift.Bool
 }
 @objc public enum AcquireIOAPNSTokenType : Swift.Int {
   case unknown = 0
@@ -131,7 +132,7 @@ extension UITextField {
   @objc optional func onCobrowseSessionRequestDecline()
   @objc optional func didCobrowseSessionStateChange(_ status: AcquireIOSDK.CobrowseSessionStatus)
 }
-extension AcquireIODelegate {
+extension AcquireIOSDK.AcquireIODelegate {
   public func didChangeConnectionStatus(status: AcquireIOSDK.AcquireIOConnectionStatus)
   public func didChangeAgentStatus(agentID: Swift.String, andStatus status: AcquireIOSDK.AcquireIOAgentStatus)
   public func didUpdateUnreadCount(_ count: Swift.Int)
@@ -148,7 +149,7 @@ extension AcquireIODelegate {
   @objc final public func setAccount(_ accountUID: Swift.String, withOptions optionDictionary: AcquireIOSDK.AcquireIOConfig?)
   @objc deinit
 }
-extension AcquireIO {
+extension AcquireIOSDK.AcquireIO {
   @objc final public func showSupport(_ viewController: UIKit.UIViewController)
   @objc final public func showSupport(_ viewController: UIKit.UIViewController, withReference reference: Swift.String)
   @objc final public func showSupport(_ viewController: UIKit.UIViewController, withReference reference: Swift.String, withMessage message: Swift.String)
@@ -221,14 +222,14 @@ extension AcquireIO {
   @objc final public func setDict(_ dict: [Swift.String : Any])
   @objc deinit
 }
-extension UIView {
-  open func addRippleAnimation(color: UIKit.UIColor, rippleWidth: CoreGraphics.CGFloat = 2, duration: Swift.Double = 1.5, repeatCount: Swift.Int = 1, rippleCount: Swift.Int = 3, rippleDistance: CoreGraphics.CGFloat? = nil, expandMaxRatio ratio: CoreGraphics.CGFloat = 1, startReset: Swift.Bool = true, handler: ((QuartzCore.CAAnimation) -> Swift.Void)? = nil)
-  open func removeRippleAnimation()
-  open var isRippleAnimating: Swift.Bool {
+extension UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) open func addRippleAnimation(color: UIKit.UIColor, rippleWidth: CoreGraphics.CGFloat = 2, duration: Swift.Double = 1.5, repeatCount: Swift.Int = 1, rippleCount: Swift.Int = 3, rippleDistance: CoreGraphics.CGFloat? = nil, expandMaxRatio ratio: CoreGraphics.CGFloat = 1, startReset: Swift.Bool = true, handler: ((QuartzCore.CAAnimation) -> Swift.Void)? = nil)
+  @_Concurrency.MainActor(unsafe) open func removeRippleAnimation()
+  @_Concurrency.MainActor(unsafe) open var isRippleAnimating: Swift.Bool {
     get
   }
 }
-extension String {
+extension Swift.String {
   public func isMatch(regEx: Swift.String) -> Swift.Bool
   public var isPhoneNumber: Swift.Bool {
     get
@@ -237,12 +238,12 @@ extension String {
     get
   }
 }
-extension UIScreen {
-  public var displayCornerRadius: CoreGraphics.CGFloat {
+extension UIKit.UIScreen {
+  @_Concurrency.MainActor(unsafe) public var displayCornerRadius: CoreGraphics.CGFloat {
     get
   }
 }
-extension UIViewController {
+extension UIKit.UIViewController {
   @objc override dynamic open func awakeFromNib()
 }
 final public class RecordingOverlay {
@@ -274,8 +275,6 @@ final public class RecordingOverlay {
   final public func disableInteractions(exceptFor views: [UIKit.UIView] = [])
   final public func enableInteractions()
   @objc deinit
-}
-extension RecordingOverlay {
 }
 extension AcquireIOSDK.AIOCallType : Swift.Equatable {}
 extension AcquireIOSDK.AIOCallType : Swift.Hashable {}
